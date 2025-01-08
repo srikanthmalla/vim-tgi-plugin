@@ -1,0 +1,36 @@
+*vim_tgi_plugin.txt*    Plugin documentation for vim_tgi_plugin
+
+==============================================================================
+NAME
+    vim_tgi_plugin - A plugin to interact with LLMs for inline edits and chat
+
+==============================================================================
+SYNOPSIS
+    :InlineEdit <args> 		- Send command with other files/functions
+    :[range]InlineEdit <args>   - Send selected text and other files/functions
+    :StartChat <args>           - Open a chat interaction window
+    :StopChat                   - Stop the current chat interaction
+    :AcceptSuggestion           - Accept inline suggestion and remove selected 
+    :call GenerateCtags()       - Generate or Regenerate the ctags 
+
+==============================================================================
+DESCRIPTION
+    vim_tgi_plugin provides commands to interact with LLMs for inline code edits
+    and general chat assistance.
+
+==============================================================================
+COMMANDS
+    :InlineEdit <args>
+        Sends the selected range or current buffer to the LLM. If "@file" is
+        provided, the current file content or the specified file content will
+        be included in the prompt.
+
+    :StartChat <args>
+        Opens a split window for chatting with the LLM.
+
+    :StopChat
+        Stops the ongoing chat interaction.
+
+==============================================================================
+SEE ALSO
+    :help

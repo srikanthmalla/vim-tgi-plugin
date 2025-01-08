@@ -1,0 +1,1 @@
+API_URL = "http://url:8080/v1/chat/completions"
