@@ -2,6 +2,15 @@
 
 A Vim plugin to interact with LLMs for inline edits and chat.
 
+## Installation
+
+choose one of the following two options:
+
+### using [vim-plug](https://github.com/junegunn/vim-plug): 
+
+`Plug 'srikanthmalla/vim-tgi-plugin'`
+
+### clone the repo and manually add the path to runtime:
 
 Copy this repo under `.vim` and add this below line to `.vimrc`
 
@@ -9,11 +18,11 @@ Copy this repo under `.vim` and add this below line to `.vimrc`
 set runtimepath+=~/.vim/vim-tgi-plugin
 ```
 
-NOTE: update `API_URL` in `python/config.py`
+**NOTE**: update `API_URL` in `vim-tgi-plugin/python/config.py` 
 
-Suggested Prereqs for better experience:
+## Dependencies:
 
-`fzf.vim` for interactive selection of files/ctags
+[`fzf.vim`](https://github.com/junegunn/fzf.vim) for interactive selection of files/ctags
 
 `sudo apt install universal-ctags` to generate tags to functions and classes for easy finding them with fzf
 
@@ -50,7 +59,7 @@ Suggested Prereqs for better experience:
 
 1. **Send Current File to LLM**:
     ```vim
-    :InlineEdit @file explain this
+    :InlineEdit write sum function in python
     ```
 
 need to to tab after @file or @tag to select other files or functions
