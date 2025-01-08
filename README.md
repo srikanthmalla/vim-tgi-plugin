@@ -10,6 +10,8 @@ choose one of the following two options:
 
 `Plug 'srikanthmalla/vim-tgi-plugin'`
 
+**NOTE**: update <url> and port in `API_URL="http://<url>:8080/v1/chat/completions"` in `.vim/plugged/vim-tgi-plugin/python/config.py` 
+
 ### clone the repo and manually add the path to runtime:
 
 Copy this repo under `.vim` and add this below line to `.vimrc`
@@ -18,7 +20,7 @@ Copy this repo under `.vim` and add this below line to `.vimrc`
 set runtimepath+=~/.vim/vim-tgi-plugin
 ```
 
-**NOTE**: update `API_URL` in `vim-tgi-plugin/python/config.py` 
+**NOTE**: update <url> and port in `API_URL="http://<url>:8080/v1/chat/completions"` in `vim-tgi-plugin/python/config.py` 
 
 ## Dependencies:
 
