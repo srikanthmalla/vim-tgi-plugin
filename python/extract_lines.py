@@ -84,8 +84,7 @@ if __name__ == "__main__":
     # Get the Git root directory
     git_root = get_git_root()
     if git_root is None:
-        print("Error: Not inside a Git repository.")
-        sys.exit(1)
+        git_root = "."
 
     # Path to the tags file in the Git root
     tags_file_path = os.path.join(git_root, "tags")
