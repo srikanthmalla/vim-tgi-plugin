@@ -16,7 +16,7 @@ def get_git_root():
         git_root = subprocess.check_output(["git", "rev-parse", "--show-toplevel"], stderr=subprocess.DEVNULL)
         return git_root.decode("utf-8").strip()
     except subprocess.CalledProcessError:
-        return None
+        return "."
 def extract_tag_details(tags_file, selected):
     """Extract tag details and retrieve content from the file."""
     try:
@@ -53,8 +53,7 @@ def extract_tag_details(tags_file, selected):
 
         # Use the Git root to resolve the full path
         git_root = get_git_root()
-        if git_root is None:
-            return "Error: Not inside a Git repository."
+
         file_path = os.path.join(git_root, relative_path)
 
         # Check if the file exists
@@ -83,8 +82,6 @@ if __name__ == "__main__":
     selected_entry = sys.argv[1]
     # Get the Git root directory
     git_root = get_git_root()
-    if git_root is None:
-        git_root = "."
 
     # Path to the tags file in the Git root
     tags_file_path = os.path.join(git_root, "tags")
