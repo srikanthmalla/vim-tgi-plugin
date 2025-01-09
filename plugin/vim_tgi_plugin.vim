@@ -129,7 +129,7 @@ endfunction
 " Function to handle the result from fzf
 function! s:handle_fzf_result(file)
   " Optionally log the selected file
-  echom "Selected file: " . a:file
+  " echom "Selected file: " . a:file
   return a:file
 endfunction
 
