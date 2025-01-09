@@ -67,7 +67,7 @@ function! InlineEditFileCompletion(A, L, P)
     if system('git rev-parse --is-inside-work-tree') =~ 'true'
       " Fetch Git-tracked files
       let l:git_root = trim(system('git rev-parse --show-toplevel'))
-      let l:files = split(system('git -C ' . shellescape(l:git_root) . ' ls-files'), '\n')
+      let l:files = split(system('git -C ' . shellescape(l:git_root) . ' ls-files -co'), '\n')
     else
       " Fetch all files recursively
       let l:files = globpath('.', '**', 0, 1)
