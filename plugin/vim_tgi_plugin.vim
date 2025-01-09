@@ -63,15 +63,15 @@ function! InlineEditFileCompletion(A, L, P)
   if a:A =~# '@file$'
     echom "Detected @file as the last argument"
 
-    let l:git_root ='.'
     " Fetch the list of files
     if system('git rev-parse --is-inside-work-tree') =~ 'true'
       " Fetch Git-tracked files
-      l:git_root = trim(system('git rev-parse --show-toplevel'))
+      let l:git_root = trim(system('git rev-parse --show-toplevel'))
       let l:files = split(system('git -C ' . shellescape(l:git_root) . ' ls-files'), '\n')
     else
       " Fetch all files recursively
       let l:files = globpath('.', '**', 0, 1)
+      let l:git_root = '.'
     endif
 
     " Use fzf for interactive selection
