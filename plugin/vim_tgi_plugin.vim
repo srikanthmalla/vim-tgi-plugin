@@ -122,7 +122,7 @@ function! InlineEditFileCompletion(A, L, P)
 	return l:selected_tag
   endif  
   " Default case: No suggestions
-  echom "No match for @file or @tag context"      
+  " echom "No match for @file or @tag context"      
   return []
 endfunction
 
