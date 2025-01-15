@@ -36,6 +36,7 @@ set runtimepath+=~/.vim/vim-tgi-plugin
 - Sends the selected range or current buffer to the LLM.
 - If `@file` is provided, the current file content or the specified file (tab after @file) content will be included in the prompt.
 - If `@tag` is provided, the ctag content (tab after @tag) is shown to select and will  be included in the prompt.
+- If `@buf` is provided, you can select vim buffer that is standard or terminal.
 
 ### `:StartChat <args>`
 - Opens a split window for chatting with the LLM.
@@ -64,7 +65,7 @@ set runtimepath+=~/.vim/vim-tgi-plugin
     :InlineEdit write sum function in python
     ```
 
-need to to tab after @file or @tag to select other files or functions
+need to to tab after @file or @tag or @buf to select other files or functions/classes or vim(terminal/standard) buffers respectively
 
 2. **Chat Interaction**:
     ```vim

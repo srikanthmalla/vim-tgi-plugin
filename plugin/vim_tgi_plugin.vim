@@ -58,7 +58,31 @@ endfunction
 function! InlineEditFileCompletion(A, L, P)
   " Debugging: Log the current argument
   echom "InlineEditFileCompletion triggered with argument: " . a:A
-      
+  " Handle @buf
+  if a:A =~# '@buf$'
+    echom "Detected @buffer as the last argument"
+
+    " Fetch a list of all buffers
+    let l:buffers = []
+    for l:buf in range(1, bufnr('$'))
+      if buflisted(l:buf)
+        let l:buf_name = bufname(l:buf)
+        let l:display_name = l:buf_name !=# '' ? l:buf_name : '[No Name]'
+        let l:buffer_info = '@buf/' . l:buf . ':' . l:display_name
+        call add(l:buffers, l:buffer_info)
+      endif
+    endfor
+
+    " Use fzf for interactive buffer selection
+    let l:selected_buffer = fzf#run({
+          \ 'source': l:buffers,
+          \ 'sink':   function('s:handle_fzf_result'),
+          \ })
+
+    " Return the selected buffer or default
+    return l:selected_buffer
+  endif
+
   " If the argument ends with @file
   if a:A =~# '@file$'
     echom "Detected @file as the last argument"
@@ -153,7 +177,41 @@ function! InlineEditHandler(args, line1, line2)
      
   " Process each argument
   for l:arg in l:args_list
-    if l:arg == "@file"
+    echom "Processing buffer argument: " . l:arg
+    if l:arg =~# '^@buf/\d\+:\S\+$'
+      " Handle @buf/<buffer_number> arguments
+      let l:buf_number = str2nr(matchstr(l:arg, '^@buf/\zs\d\+'))
+      echom "Processing buffer argument: " . l:buf_number
+      if buflisted(l:buf_number)
+        let l:buf_name = bufname(l:buf_number)
+	" Get the buffer type
+	let l:buf_type = getbufvar(l:buf_number, '&buftype')
+	echom "Buffer type: " . (l:buf_type ==# '' ? 'standard' : l:buf_type)
+
+	" Handle buffer content based on type
+	if l:buf_type ==# 'terminal'
+	  echom "Buffer " . l:buf_number . " is a terminal buffer."
+	else
+	  echom "Buffer " . l:buf_number . " is a standard buffer."
+	endif
+        " Load the buffer if it's not loaded
+        call bufload(l:buf_number)
+
+        " Check the buffer content
+        let l:buf_raw_content = getbufline(l:buf_number, 1, '$')
+        if empty(l:buf_raw_content)
+	  echom "Buffer " . l:buf_number . " is empty."
+	  let l:buf_content = ""
+        else
+	  let l:buf_content = join(l:buf_raw_content, "\n")
+        endif
+        let l:buf_content_escaped = substitute(l:buf_content, '\n', '\\n', 'g')
+        echom "Processing buffer argument: " . l:buf_content_escaped
+        let l:processed_args += ["Buffer (" . l:buf_name . "):\\n" . l:buf_content_escaped]
+      else
+        echom "Buffer " . l:buf_number . " is not listed or does not exist."
+      endif
+    elseif l:arg == "@file"
       " If it's @file without a filename, use the current buffer content
       let l:current_file_content = join(getline(1, '$'), "\n")
       " Escape newlines for py3eval
